@@ -13,9 +13,9 @@ Variáveis globais
 name = 'Sistema de Colisão'
  
 sphere_object = ColidObject(0, 2, 2, 0.2, 0.2, 0.2) #x, y, z, width, height, depth
-sphere_object.blue = 1
-sphere_object.green = 1
-sphere_object.red = 1
+sphere_object.blue = 0.8
+sphere_object.green = 0.8
+sphere_object.red = 0.8
 
 sphere_object_fixed = ColidObject(1, 0, -4, 0.4, 0.4, 0.4) #x, y, z, width, height, depth
 sphere_object_fixed.red = 1
@@ -26,8 +26,8 @@ sphere_object_fixed2.green = 1
 
 sphere_object_fixed3 = ColidObject(-3, 0, -4, 1, 1, 1) #x, y, z, width, height, depth
 sphere_object_fixed3.green = 0.5
-sphere_object_fixed3.red = 0.2
-sphere_object_fixed3.blue = 0.8
+sphere_object_fixed3.red = 0.0
+sphere_object_fixed3.blue = 1
 
 
 '''
@@ -60,7 +60,7 @@ Função para desenhar a janela
 def window():
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH)
-	glutInitWindowSize(400, 400)
+	glutInitWindowSize(600, 440)
 	glutCreateWindow(name)
 	glutKeyboardFunc(normal_keys_filter)
 	glutSpecialFunc(especial_keys_filter)
@@ -100,7 +100,7 @@ def material():
 Função para configurar a iluminação
 '''
 def light():
-	glClearColor(0, 0, 0, 0)
+	glClearColor(1, 1, 1, 1)
 	lightZeroPosition = [1,4,10,1]
 	lightZeroColor = [0.9,0.9,0.9,1.0]
 	glLightfv(GL_LIGHT0, GL_POSITION, lightZeroPosition)

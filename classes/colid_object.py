@@ -9,7 +9,7 @@ class ColidObject(object):
 	
 	colid_type = "sphere"
 	colid_tolerance = 1.2
-
+	direction = False
 	arround_objects = []
 	'''
 	Coordenadas do Objeto
@@ -142,21 +142,27 @@ class ColidObject(object):
 
 			if key == b'w':
 				object.addZ()
+				object.blue += 0.1
 
 			if key == b's':
 				object.decZ()
+				object.blue -= 0.1
 
 			if key == GLUT_KEY_UP:
 				object.addY()
+				object.green += 0.1
 			
 			if key == GLUT_KEY_DOWN:
 				object.decY()
+				object.green -= 0.1
 				
 			if key == GLUT_KEY_LEFT:
 				object.decX()
+				object.red -= 0.1
 				
 			if key == GLUT_KEY_RIGHT:
 				object.addX()
+				object.red += 0.1
 				
 			return True
 		else:
@@ -189,6 +195,7 @@ class ColidObject(object):
 
 	def draw_sphere(self):
 		glPushMatrix()
+		self.animate(self, "color")
 		glMaterialfv(GL_FRONT,GL_DIFFUSE,self.color())
 		glTranslate(self.x, self.y, self.z)
 		glutSolidSphere(self.width,50,10)
@@ -198,9 +205,42 @@ class ColidObject(object):
 
 	def draw_cube(self):
 		glPushMatrix()
+
 		glMaterialfv(GL_FRONT,GL_DIFFUSE,self.color())
 		glTranslate(self.x, self.y, self.z)
+		self.animate(self, "jump")
 		glutSolidCube(self.width)
 		glutPostRedisplay()
 		glPopMatrix()
 		return
+
+	def animate(self, object, type):
+		
+		if(type == "jump"):
+			if(object.y >= -2 and object.y <= 4 and object.direction):
+				object.addY()
+			else:
+				object.velocity = 0.04
+				object.direction = False
+
+			if(not object.direction):
+				object.decY()
+
+				if(object.y <= -2):
+					object.y = -2
+					object.velocity = 0.2
+					object.direction = True
+
+		elif(type == "color"):
+			#aumentar o vermelho se o azul estiver em 0
+			if(object.blue <= 0):
+				object.red += 0.02
+				object.green -= 0.02
+			#aumentar o verde se o vermelho estive em 0
+			if(object.red <= 0):
+				object.green += 0.02
+				object.blue -= 0.02
+			#aumentar o azul se o verde estiver em 0
+			if(object.green <= 0):
+				object.blue += 0.02
+				object.red -= 0.02
