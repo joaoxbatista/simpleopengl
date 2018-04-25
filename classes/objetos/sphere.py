@@ -21,8 +21,8 @@ class Sphere(Object):
 		self.radius = radius
 
 	def draw(self):
-		print("Sphere draw method")
-		pprint(self.quadric)
+		# print("Sphere draw method")
+		# pprint(self.quadric)
 		super(Sphere, self).draw()
 		glPushMatrix()
 		glMaterialfv(GL_FRONT,GL_DIFFUSE,self.color)

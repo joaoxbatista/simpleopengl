@@ -19,8 +19,9 @@ class Cube(Object):
 		self.size = size
 
 	def draw(self):
-		print("Cube draw method")
+		
 		super(Cube, self).draw()
+		
 		glPushMatrix()
 		glMaterialfv(GL_FRONT,GL_DIFFUSE,self.color)
 		glTranslate(self.x, self.y, self.z)
