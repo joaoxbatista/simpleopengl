@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+
 import sys
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
 from camera import *
+from light import *
 
 class Window(object):
 
@@ -26,7 +28,8 @@ class Window(object):
 	background = [1, 1, 1, 1]
 	objects = []
 	camera = Camera([0.0, 0.0, 4.0], [0.0, 0.0, 0.0])
-
+	lights = []
+	active_lights = True
 	'''
 	Métodos
 	-----------------------------------------------------------------
@@ -40,7 +43,7 @@ class Window(object):
 		self.title = title
 		self.height = height
 		self.width = width
-
+		self.active_lights = True
 	'''
 	Exibe a janela
 	'''
@@ -81,6 +84,11 @@ class Window(object):
 	'''
 	def normal_keys_filter(self, key, x, y):
 		self.camera.normal_keys_filter(key)
+
+		if(key == b'l'):
+			self.active_lights = not self.active_lights
+			print("Status da luz" + str(self.active_lights))
+
 		self.display()
 		
 	def especial_keys_filter(self, key, x, y):
@@ -93,11 +101,11 @@ class Window(object):
 		glClearColor(self.background[0], self.background[1], self.background[2], self.background[3])
 
 		lightZeroPosition = [10,4,10,1]
-		lightZeroColor = [0.9,0.9,0.9,1.0]
+		lightZeroColor = [0.9,0.9,0.9,.2]
 
 		#Capacidade de brilho do material
-		especularidade=[.1,.4,.5,1]
-		especMaterial = 120
+		especularidade=[.1,.4,.5,0.2]
+		especMaterial = 100
 
 		#  Define a refletância do material
 		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, especularidade)
@@ -105,14 +113,21 @@ class Window(object):
 		glMateriali(GL_FRONT,GL_SHININESS,especMaterial)
 
 		# Ativa o uso da luz ambiente
-		# glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2,0.2,0.2,0.2])
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2,0.2,0.2,0.2])
 
 		glLightfv(GL_LIGHT0, GL_POSITION, lightZeroPosition)
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, lightZeroColor)
-		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.2)
+		# glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.8)
 		glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05)
 		glEnable(GL_LIGHT0)
 
+		if(self.active_lights == True):
+			print("ENTROU NO DESENHO DAS LUZES")
+			for light in self.lights:
+				light.active()
+		else:
+			for light in self.lights:
+				light.desactive()
 	'''
 	Configurações dos materiais
 	''' 
@@ -122,10 +137,22 @@ class Window(object):
 		glEnable(GL_DEPTH_TEST)
 		glEnable(GL_LIGHTING)
  		
-
 	    
  	'''
 	Adiciona objetos ao conjunto de objetos
 	''' 
-	def addObject(self, object):
+	def addobj(self, object):
 		self.objects.append(object)
+
+
+	'''
+	Adiciona uma luz ao conjunto de luzes
+	''' 
+	def addlight(self, light):
+		self.lights.append(light)
+
+	'''
+	Desabilita as luzes da aplicação
+	'''
+	def lights_disable(self):
+		self.active_lights = False
