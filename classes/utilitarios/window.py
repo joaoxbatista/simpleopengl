@@ -104,25 +104,25 @@ class Window(object):
 		lightZeroColor = [0.9,0.9,0.9,.2]
 
 		#Capacidade de brilho do material
-		especularidade=[.1,.4,.5,0.2]
+		especularidade=[.4,.6,.8,0.2]
 		especMaterial = 100
 
+	
 		#  Define a refletância do material
 		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, especularidade)
 		#  Define a concentração do brilho
 		glMateriali(GL_FRONT,GL_SHININESS,especMaterial)
 
 		# Ativa o uso da luz ambiente
-		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2,0.2,0.2,0.2])
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, [0.2,0.2,0.2,0])
 
 		glLightfv(GL_LIGHT0, GL_POSITION, lightZeroPosition)
 		glLightfv(GL_LIGHT0, GL_DIFFUSE, lightZeroColor)
-		# glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.8)
+		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.8)
 		glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.05)
 		glEnable(GL_LIGHT0)
 
 		if(self.active_lights == True):
-			print("ENTROU NO DESENHO DAS LUZES")
 			for light in self.lights:
 				light.active()
 		else:

@@ -1,25 +1,15 @@
 # -*- coding: utf-8 -*
 
-class Rgb(object):
-
-	@staticmethod
-	def color(red, green, blue):
-		value = 1.0/255.0
-		red = value * red
-		green = value * green
-		blue = value * blue
-		color = (round(red,2), round(green,2), round(blue,2))
-		print(color)
-		return color
-
-		
-
-COLOR_RED = Rgb.color(200, 0, 0)
-COLOR_GREEN = Rgb.color(0, 255, 0)
-COLOR_BLUE = Rgb.color(0, 0, 20)
-
-COLOR_GREEN1 = Rgb.color(2, 188, 156)
-COLOR_GREEN2 = Rgb.color(46, 204, 113)
-
-COLOR_BLUE1 = Rgb.color(40, 120, 180)
-COLOR_BLUE2 = Rgb.color(52, 152, 219)
+COLOR = {
+	'red': (0.67, 0.8, 0.91),
+	'blue': (0.57, 0.58, 0.79),
+	'green': (0.62, 0.81, 0.71),
+	'yellow': (0.66, 0.7, 0.69),
+	'orange': (0.8, 0.71, 0.42),
+	'purple': (1.0, 0.84, 0.01),
+	'pink': (0.9, 0.4, 0.4),
+	'ocean': (0.96, 0.49, 0.26),
+	'lime': (0.68, 0.44, 0.69),
+	'grey': (0.03, 0.42, 0.71),
+	'white': (1, 1, 1)
+}

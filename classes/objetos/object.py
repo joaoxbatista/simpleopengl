@@ -4,6 +4,8 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
 from pprint import pprint
+from copy import deepcopy
+from animation import *
 
 class Object(object):
 	
@@ -23,6 +25,9 @@ class Object(object):
 		"scale"     : [[1, 1, 1]]
 	}
 
+	animation = None
+ 
+	texture = None
 	'''
 	Métodos
 	-----------------------------------------------------------------
@@ -38,13 +43,14 @@ class Object(object):
 			"scale"     : []
 		}
 
+		self.animation = None
+		self.texture = None
+
 	'''
 	Realiza a chamada do conjunto de transformações
 	'''
 	def draw(self):
-		print("X: %i, Y: %i e Z: %i" % (self.x, self.y, self.z))
-		print("Tramsformações: ")
-		pprint(self.transform)
+		pass
 
 	'''
 	Operações de transformação
@@ -105,3 +111,12 @@ class Object(object):
 		for scale in reversed(self.transform['scale']):
 			glScale(scale[0], scale[1], scale[2])
 			# pprint(scale)
+
+	'''
+	Realiza a chamada do conjunto de animações
+	'''
+	def animate(self):
+		self.animation.animate()
+
+	def clone(self):
+		return deepcopy(self)

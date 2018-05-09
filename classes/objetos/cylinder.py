@@ -2,6 +2,7 @@
 
 from object import *
 
+
 class Cylinder(Object):
 
 	'''
@@ -25,11 +26,17 @@ class Cylinder(Object):
 		self.height = height
 
 	def draw(self):
-		
-		print([self.base, self.top, self.height, self.slices, self.stacks])
 		glPushMatrix()
 		glMaterialfv(GL_FRONT,GL_DIFFUSE,self.color)
 		glTranslate(self.x, self.y, self.z)
 		self.transformations()
-		glutSolidCylinder(self.base, self.height, self.slices, self.stacks)
+
+		if(self.animation):
+			self.animation.animate()
+			glutSolidCylinder(self.base, self.height, self.slices, self.stacks)
+			glutPostRedisplay()
+			
+		else:
+			glutSolidCylinder(self.base, self.height, self.slices, self.stacks)
+
 		glPopMatrix()

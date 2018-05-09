@@ -21,12 +21,19 @@ class Sphere(Object):
 		self.radius = radius
 
 	def draw(self):
-		# print("Sphere draw method")
-		# pprint(self.quadric)
 		super(Sphere, self).draw()
 		glPushMatrix()
 		glMaterialfv(GL_FRONT,GL_DIFFUSE,self.color)
 		glTranslate(self.x, self.y, self.z)
 		self.transformations()
+
+		if(self.animation):
+			self.animation.animate()
+
 		glutSolidSphere(self.radius,self.slices,self.stacks)
+
+		if(self.animation):
+			glutPostRedisplay()
+			
+			
 		glPopMatrix()
