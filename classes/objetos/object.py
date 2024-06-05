@@ -5,7 +5,7 @@ from OpenGL.GLU import *
 from OpenGL.GL import *
 from pprint import pprint
 from copy import deepcopy
-from animation import *
+from animacoes.animation import *
 
 class Object(object):
 	
